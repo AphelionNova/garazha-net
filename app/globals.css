@@ -3,13 +3,16 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --surface-border: rgb(255 255 255 / 8%);
+  --surface-highlight: rgb(255 255 255 / 3%);
+  --surface-shadow: 0 24px 70px rgb(0 0 0 / 18%);
+  --motion-premium: 240ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +25,234 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-manrope), Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  overflow-x: clip;
+}
+
+img,
+video,
+iframe {
+  max-width: 100%;
+}
+
+/* Premium surface system: restrained depth without changing component geometry. */
+main > section > div,
+main > footer > div {
+  border-color: var(--surface-border);
+  box-shadow:
+    inset 0 1px 0 var(--surface-highlight),
+    var(--surface-shadow);
+}
+
+.premium-header {
+  position: relative;
+  isolation: isolate;
+}
+
+.premium-header::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    180deg,
+    rgb(5 5 5 / 58%) 0%,
+    rgb(5 5 5 / 34%) 58%,
+    rgb(5 5 5 / 10%) 82%,
+    transparent 100%
+  );
+  backdrop-filter: blur(12px) saturate(112%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 62%, transparent 100%);
+}
+
+.premium-hero::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 78% 42%, transparent 24%, rgb(0 0 0 / 12%) 100%),
+    linear-gradient(180deg, rgb(0 0 0 / 8%) 0%, transparent 34%, rgb(0 0 0 / 20%) 100%);
+}
+
+main article,
+main aside {
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 3%);
+  transition:
+    transform var(--motion-premium),
+    border-color var(--motion-premium),
+    background-color var(--motion-premium),
+    box-shadow var(--motion-premium);
+}
+
+main article:hover,
+main aside:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 5%),
+    0 18px 42px rgb(0 0 0 / 22%);
+}
+
+main a.rounded-full,
+main button.rounded-full {
+  transition:
+    transform var(--motion-premium),
+    color var(--motion-premium),
+    background-color var(--motion-premium),
+    border-color var(--motion-premium),
+    box-shadow var(--motion-premium),
+    filter var(--motion-premium);
+}
+
+main a.rounded-full:hover,
+main button.rounded-full:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 20%);
+  filter: brightness(1.035);
+}
+
+main a.rounded-full:active,
+main button.rounded-full:active {
+  transform: translateY(0);
+}
+
+.premium-benefits {
+  border-color: rgb(255 255 255 / 7%);
+  background: linear-gradient(180deg, transparent, rgb(0 0 0 / 12%));
+}
+
+.premium-benefits > div {
+  border-color: rgb(255 255 255 / 6%);
+}
+
+.reviews-title {
+  font-size: clamp(1.5rem, 2.3vw, 2.1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  main *,
+  main *::before,
+  main *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  main article:hover,
+  main aside:hover,
+  main a.rounded-full:hover,
+  main button.rounded-full:hover {
+    transform: none;
+  }
+}
+
+/* Shared typography roles. These classes deliberately avoid controls and layout. */
+.type-hero,
+.type-section-title,
+.type-card-title {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+.type-hero {
+  font-size: clamp(2rem, 4.25vw, 3.625rem);
+  font-weight: 650;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+}
+
+.type-section-title,
+main h2 {
+  font-size: clamp(1.75rem, 3.1vw, 2.625rem);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.032em;
+}
+
+.type-card-title {
+  font-size: clamp(1.2rem, 1.8vw, 1.625rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+}
+
+.type-body,
+.type-secondary,
+.type-fine {
+  overflow-wrap: anywhere;
+}
+
+.type-body {
+  font-size: clamp(0.9375rem, 1.2vw, 1rem);
+  line-height: 1.7;
+  color: rgb(255 255 255 / 72%);
+}
+
+.type-secondary {
+  font-size: clamp(0.875rem, 1.05vw, 0.9375rem);
+  line-height: 1.65;
+  color: rgb(255 255 255 / 62%);
+}
+
+.type-fine {
+  font-size: 0.75rem;
+  line-height: 1.55;
+  color: rgb(255 255 255 / 48%);
+}
+
+.type-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: 0.12em;
+}
+
+.type-price {
+  font-size: clamp(2.125rem, 3vw, 2.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+@media (max-width: 640px) {
+  .premium-hero > div:first-child {
+    background-position: 62% center !important;
+  }
+
+  .premium-benefits > div {
+    border-right: 0;
+    border-bottom: 1px solid rgb(255 255 255 / 6%);
+  }
+
+  .premium-benefits > div:last-child {
+    border-bottom: 0;
+  }
+
+  .type-hero {
+    font-size: clamp(1.75rem, 9.3vw, 2.25rem);
+    letter-spacing: -0.035em;
+  }
+
+  .type-section-title,
+  main h2 {
+    font-size: clamp(1.55rem, 7.6vw, 2rem);
+  }
 }
