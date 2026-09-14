@@ -213,6 +213,13 @@ export async function POST(request: Request) {
   const resource = firstText(payload.resource)?.toLowerCase();
   const status = firstText(payload.status)?.toLowerCase();
 
+  console.info("YCLIENTS webhook event", {
+    resource,
+    status,
+    record_id: firstText(payload.resource_id, asRecord(payload.data).id),
+    comment_present: Boolean(asText(asRecord(payload.data).comment)),
+  });
+
   if (resource !== "record" || status !== "create") {
     return Response.json({ ok: true, ignored: true });
   }
