@@ -75,12 +75,33 @@ export default function Home() {
                 </a>
               </nav>
 
-              <a
-                href="https://n1118892.yclients.ru/"
-                className="ms_booking ml-auto shrink-0 rounded-full bg-[#ff6a00] px-4 py-3 text-[12px] font-medium transition hover:bg-[#ff7a1a] sm:px-6 sm:text-sm lg:ml-0 lg:px-7"
-              >
-                Записаться
-              </a>
+              <div className="ml-auto flex shrink-0 items-center gap-3 lg:ml-0">
+                <a
+                  href="https://t.me/garagvo"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Telegram гаража.нет"
+                  title="Telegram"
+                  className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black/20 text-white/80 transition hover:border-[#ff6a00]/55 hover:text-white lg:flex"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    className="h-[18px] w-[18px]"
+                    fill="currentColor"
+                  >
+                    <path d="M21.7 3.5 18.5 19c-.2 1.1-.9 1.4-1.8.9l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.1 12.8l-4.8-1.5c-1.1-.3-1.1-1 .2-1.5L20.3 2.6c.9-.3 1.7.2 1.4.9Z" />
+                  </svg>
+                </a>
+
+                <a
+                  href="https://n1118892.yclients.ru/"
+                  data-url="https://n1118892.yclients.ru/"
+                  className="ms_booking shrink-0 rounded-full bg-[#ff6a00] px-4 py-3 text-[12px] font-medium transition hover:bg-[#ff7a1a] sm:px-6 sm:text-sm lg:px-7"
+                >
+                  Записаться
+                </a>
+              </div>
 
               <MobileMenu />
             </header>
@@ -108,6 +129,7 @@ export default function Home() {
                 <div className="mt-8 flex flex-col gap-3 sm:mt-9 sm:flex-row sm:gap-4">
                   <a
                     href="https://n1118892.yclients.ru/"
+                    data-url="https://n1118892.yclients.ru/"
                     className="ms_booking w-full rounded-full bg-[#ff6a00] px-8 py-4 text-center text-sm font-medium transition hover:bg-[#ff7a1a] sm:w-auto"
                   >
                     Записаться онлайн
@@ -391,6 +413,7 @@ export default function Home() {
 
           <a
             href="https://n1118892.yclients.ru/"
+            data-url="https://n1118892.yclients.ru/"
             className="ms_booking block rounded-full bg-[#ff6a00] px-6 py-4 text-center text-sm font-medium transition hover:bg-[#ff7a1a]"
           >
             Забронировать
@@ -444,6 +467,7 @@ export default function Home() {
 
           <a
             href="https://n1118892.yclients.ru/"
+            data-url="https://n1118892.yclients.ru/"
             className="ms_booking block rounded-full bg-[#ff6a00] px-6 py-4 text-center text-sm font-medium transition hover:bg-[#ff7a1a]"
           >
             Забронировать
@@ -676,6 +700,7 @@ export default function Home() {
 
           <a
             href="https://n1118892.yclients.ru/"
+            data-url="https://n1118892.yclients.ru/"
           className="ms_booking mt-auto flex items-center justify-center rounded-full border border-[#ff6a00]/40 bg-[#ff6a00]/[0.06] px-5 py-3 text-[13px] text-white/85 transition duration-300 hover:border-[#ff6a00] hover:bg-[#ff6a00] hover:text-white"
           >
             Записаться на мойку
@@ -775,6 +800,7 @@ export default function Home() {
       <div className="mt-8 flex justify-center">
         <a
           href="https://n1118892.yclients.ru/"
+          data-url="https://n1118892.yclients.ru/"
           className="ms_booking rounded-full border border-[#ff6a00]/40 bg-[#ff6a00]/[0.06] px-8 py-3 text-sm text-white/85 transition duration-300 hover:border-[#ff6a00] hover:bg-[#ff6a00] hover:text-white"
         >
           Записаться онлайн
@@ -984,6 +1010,7 @@ export default function Home() {
 
           <a
             href="https://n1118892.yclients.ru/"
+            data-url="https://n1118892.yclients.ru/"
             className="ms_booking mt-7 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-[#ff6a00] px-8 py-4 text-center text-sm font-medium text-white transition hover:bg-[#ff7a1a] sm:w-auto"
           >
             Записаться онлайн
@@ -1207,18 +1234,18 @@ export default function Home() {
         </p>
       </div>
 
-      {/* Потом сюда поставим настоящие реквизиты */}
-      <div className="text-left text-[12px] leading-5 text-white/45 sm:text-center">
-        <p>Реквизиты организации</p>
-        <p>ИНН / ОГРНИП</p>
+      <div className="max-w-[290px] text-left text-[12px] leading-5 text-white/60 sm:text-center">
+        <p>ИП Стрекозова Владислава Александровна</p>
+        <p>ИНН 270607983263</p>
+        <p>ОГРНИП 326784700336695</p>
       </div>
 
       <div className="text-left text-[12px] leading-5 text-white/45 sm:text-right">
         <a
-          href="#"
+          href="/privacy"
           className="transition hover:text-white/60"
         >
-          Политика конфиденциальности
+          Политика обработки персональных данных
         </a>
 
         <p className="mt-1">
@@ -1228,10 +1255,15 @@ export default function Home() {
 
     </div>
 
+    <p className="mt-7 border-t border-white/10 pt-6 text-[11px] leading-[1.65] text-white/55 [overflow-wrap:anywhere] lg:mt-8 lg:max-w-[1120px]">
+      Вся представленная на сайте информация, касающаяся внешнего вида, технических характеристик, стоимости услуг, носит информационный характер и ни при каких условиях не является публичной офертой, определяемой положениями Статьи 437 (2) Гражданского кодекса РФ.
+    </p>
+
   </div>
 </footer>
 <a
   href="https://n1118892.yclients.ru/"
+  data-url="https://n1118892.yclients.ru/"
   className="ms_booking fixed bottom-4 right-4 z-50 flex h-[54px] items-center gap-2 rounded-full bg-[#ff6a00] px-5 text-[13px] font-semibold text-white shadow-[0_10px_40px_rgba(255,106,0,0.28)] transition duration-300 hover:scale-[1.03] hover:bg-[#ff7a1a] sm:bottom-6 sm:right-6 sm:h-[58px] sm:gap-3 sm:px-7 sm:text-[14px]"
 >
   <span className="h-2 w-2 rounded-full bg-white" />

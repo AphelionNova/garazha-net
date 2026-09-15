@@ -46,6 +46,24 @@ export default function MobileMenu() {
               {link.label}
             </a>
           ))}
+          <div className="mx-2 my-1 border-t border-white/10" />
+          <a
+            href="https://t.me/garagvo"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsOpen(false)}
+            className="flex items-center gap-3 rounded-xl px-4 py-3 text-[15px] font-medium text-white/80 transition hover:bg-white/[0.05] hover:text-white"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="h-[18px] w-[18px] shrink-0 text-[#ff6a00]"
+              fill="currentColor"
+            >
+              <path d="M21.7 3.5 18.5 19c-.2 1.1-.9 1.4-1.8.9l-4.9-3.6-2.4 2.3c-.3.3-.5.5-1 .5l.4-5 9.1-8.2c.4-.4-.1-.6-.6-.2L6.1 12.8l-4.8-1.5c-1.1-.3-1.1-1 .2-1.5L20.3 2.6c.9-.3 1.7.2 1.4.9Z" />
+            </svg>
+            Telegram
+          </a>
         </nav>
       )}
     </div>
