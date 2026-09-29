@@ -1,4 +1,5 @@
 import MobileMenu from "./components/MobileMenu";
+import AutoService from "./components/AutoService";
 
 const benefits = [
   {
@@ -142,6 +143,18 @@ export default function Home() {
                     Как это работает
                   </a>
                 </div>
+
+                <div className="mt-8 max-w-[610px] border-l-2 border-[#ff6a00]/70 bg-black/25 py-1 pl-5">
+                  <p className="text-base font-semibold leading-snug sm:text-lg">
+                    Не хотите ремонтировать сами? Сделаем за вас.
+                  </p>
+                  <p className="type-secondary mt-2">
+                    В «гаража.нет» есть и полноценный автосервис: диагностика, ТО и ремонт легковых автомобилей, а также Ford Transit с 2006 года.
+                  </p>
+                  <a href="#auto-service" className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#ff6a00] transition hover:text-[#ff9a52]">
+                    Подробнее об автосервисе <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -165,6 +178,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <AutoService />
       <section id="services" className="px-3 py-3 sm:px-5 sm:py-5">
       <div className="relative overflow-hidden rounded-[18px] border border-white/10 bg-white/[0.025] px-5 py-8 backdrop-blur-[10px] sm:px-7 lg:min-h-[650px] lg:px-9 lg:py-10">
       <div
