@@ -85,11 +85,23 @@ export async function POST(request: Request) {
       signal: AbortSignal.timeout(8_000),
     });
     const result = await response.json();
-    if (!response.ok || result?.ok !== true) return failure("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.", 502);
+    if (!response.ok || result?.ok !== true) {
+      // Never log the request URL, credentials, chat ID or customer data.
+      const description = typeof result?.description === "string"
+        ? result.description.split(token).join("[redacted]").split(chatId).join("[redacted]")
+          .replace(/https?:\/\/\S+/g, "[url]").replace(/[\r\n]/g, " ").slice(0, 240)
+        : "Telegram rejected the message";
+      console.error("repair-booking: Telegram rejected", { status: response.status, description });
+      return failure("Не удалось отправить заявку. Попробуйте ещё раз или позвоните нам.", 502);
+    }
     if (delivered.size >= 1000) delivered.delete(delivered.keys().next().value!);
     delivered.set(key, now);
     return Response.json({ ok: true });
-  } catch {
+  } catch (error) {
+    // Error messages and stacks may contain the Bot API URL and its token.
+    const kind = error instanceof Error && ["TimeoutError", "AbortError", "TypeError", "SyntaxError"].includes(error.name)
+      ? error.name : "DeliveryError";
+    console.error("repair-booking: Telegram delivery failed", { kind });
     return failure("Не удалось подтвердить отправку. Попробуйте ещё раз или позвоните нам.", 502);
   } finally { inFlight.delete(key); }
 }

@@ -11,8 +11,8 @@ const source = ts.transpileModule(readFileSync('app/api/repair-booking/route.ts'
 }).outputText;
 const valid = { name: 'Тест', phone: '+7 (999) 123-45-67', car: 'Ford Transit 2015', problem: 'Стук в подвеске', consent: 'yes' };
 
-function setup(fetcher = async () => Response.json({ ok: true }), env = { TELEGRAM_BOT_TOKEN: 'test-token', TELEGRAM_CHAT_ID: 'test-chat' }) {
-  const context = { exports: {}, require, Request, Response, URL, Buffer, AbortSignal, process: { env }, fetch: fetcher };
+function setup(fetcher = async () => Response.json({ ok: true }), env = { TELEGRAM_BOT_TOKEN: 'test-token', TELEGRAM_CHAT_ID: 'test-chat' }, logs = []) {
+  const context = { exports: {}, require, Request, Response, URL, Buffer, AbortSignal, Error, process: { env }, fetch: fetcher, console: { error: (...args) => logs.push(args) } };
   vm.runInNewContext(source, context);
   return (body = valid, origin = 'http://localhost:3000', host = 'localhost:3000') => context.exports.POST(new Request('http://localhost:3000/api/repair-booking', {
     method: 'POST', headers: { 'content-type': 'application/json', origin, host }, body: JSON.stringify(body),
@@ -30,6 +30,20 @@ test('valid repair request goes to the existing Telegram destination with urgent
   assert.match(calls[0].body.text, /РЕМОНТ АВТО — СРОЧНО ПЕРЕЗВОНИТЬ/);
   for (const field of ['name', 'phone', 'car', 'problem']) assert.ok(calls[0].body.text.includes(valid[field]));
   assert.equal(calls[0].body.parse_mode, undefined);
+});
+
+test('delivery diagnostics preserve HTTP status but redact credentials, URLs and customer data', async () => {
+  const logs = [];
+  const post = setup(async () => Response.json({ ok: false, description: 'Bad test-token test-chat https://api.telegram.org/bottest-token/sendMessage\nrejected' }, { status: 403 }), undefined, logs);
+  assert.equal((await post()).status, 502);
+  assert.equal(logs[0][1].status, 403);
+  const output = JSON.stringify(logs);
+  for (const secret of ['test-token', 'test-chat', 'api.telegram.org', valid.name, valid.phone]) assert.ok(!output.includes(secret));
+  const networkLogs = [];
+  const timeout = new Error('secret URL test-token'); timeout.name = 'TimeoutError';
+  assert.equal((await setup(async () => { throw timeout; }, undefined, networkLogs)()).status, 502);
+  assert.equal(networkLogs[0][1].kind, 'TimeoutError');
+  assert.ok(!JSON.stringify(networkLogs).includes('test-token'));
 });
 
 test('browser origin matches the public Host even when Next.js uses localhost internally', async () => {
