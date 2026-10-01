@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { sharedOpenGraph } from "../site-metadata";
 
 export const metadata: Metadata = {
   title: "Политика обработки персональных данных | гаража.нет",
   description: "Политика обработки персональных данных сервиса гаража.нет.",
+  alternates: { canonical: "/privacy" },
+  openGraph: {
+    ...sharedOpenGraph,
+    title: "Политика обработки персональных данных | гаража.нет",
+    description: "Политика обработки персональных данных сервиса гаража.нет.",
+    url: "/privacy",
+  },
 };
 
 const sectionClass = "space-y-4";
